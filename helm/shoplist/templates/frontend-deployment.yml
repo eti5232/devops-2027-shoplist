@@ -24,6 +24,8 @@ spec:
           imagePullPolicy: {{.Values.imagePullPolicy}}
           ports:
             - containerPort: 80
+          resources:
+            {{- toYaml .Values.frontend.resources | nindent 12 }}
 
 # Checklist:
 #   [V] four levels: apiVersion, kind, metadata, spec
