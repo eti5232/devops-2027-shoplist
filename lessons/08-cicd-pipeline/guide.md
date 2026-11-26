@@ -226,11 +226,230 @@ git push
 |---|---|---|
 | Python מתקמפל? | `python3 -m py_compile app/backend/*.py` | שגיאת תחביר ב-backend: נקודתיים חסרות, סוגריים, הזחה |
 | JavaScript תקין? | `node --check app/stats/server.js` | שגיאת תחביר ב-stats |
-| ה-chart תקין? | `helm lint helm/shoplist` | YAML שבור, או חור עם שם שגוי |
+| ה-chart תקין? | `helm lint helm/shoplist` | YAML שבור, או חור עם שם שגוי (פירוט בהמשך) |
 
 **למה זה שווה משהו?** שגיאת תחביר ב-backend תגרום ל-pod לקרוס ב-`CrashLoopBackOff`. עדיף לגלות את זה אחרי דקה ב-GitHub, מאשר אחרי חצי שעה ב-cluster.
 
 > **בעולם האמיתי:** כאן רצות גם בדיקות יחידה (`pytest`, `npm test`), בדיקות סגנון (linters), וסריקת אבטחה ל-image. הרעיון זהה: כל בדיקה היא צעד, וצעד שנכשל עוצר הכל.
+
+### לעומק: `helm lint` ו-`helm template`
+
+את שתי הפקודות הכרנו בשיעור 7. כאן הן שוב, כי `helm lint` נכנס ל-pipeline.
+
+**מה משותף:** שתיהן לוקחות את התבניות שב-`templates/` ואת `values.yaml`, וממלאות את החורים. שתיהן **לא** מדברות עם ה-cluster: אפשר להריץ אותן בלי Kubernetes בכלל, וגם על ה-runner של GitHub.
+
+**מה שונה:** מה הן עושות עם התוצאה.
+
+| | `helm lint` | `helm template` |
+|---|---|---|
+| כמו בשיעור 7 | המגיהה | תצוגה לפני הדפסה |
+| מה הוא עושה | ממלא את החורים, ובודק שהתוצאה תקינה | ממלא את החורים, ומדפיס את כל ה-YAML |
+| מה רואות בסוף | שורה אחת: `0 chart(s) failed` | כל ה-YAML שיגיע ל-cluster, קובץ אחרי קובץ |
+| כשיש שגיאה | `[ERROR]`, ו-exit code `1` | `Error:`, ו-exit code `1` |
+| מי קוראת את התוצאה | המחשב: עבר או נכשל | בן אדם: עיניים על ה-YAML |
+| איפה משתמשים | ב-pipeline, בכל push | במחשב שלכן, לפני כל התקנה |
+
+**למה ב-pipeline יש `helm lint` ולא `helm template`?** כי ב-pipeline אין מי שיקרא. `lint` מחליט לבד, עבר או נכשל, ו-GitHub עוצר לפי ה-exit code. `template` מוציא מאות שורות, ומישהי צריכה לקרוא אותן.
+
+כל הפלטים כאן אמיתיים, מה-chart של ShopList (Helm 3.19; ב-Helm 4 הפלט כמעט זהה).
+
+#### הפלט של `helm lint`, כשהכל תקין
+
+```console
+$ helm lint helm/shoplist
+==> Linting helm/shoplist
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed
+```
+
+- **השורה `[INFO]`:** רק המלצה, להוסיף אייקון ל-chart. מתעלמות.
+- **השורה האחרונה:** chart אחד נבדק, אפס נכשלו. exit code `0`, וב-GitHub ✓ ירוק.
+
+#### הפלט של `helm lint`, כשיש טעות בתבנית
+
+שבירה בכוונה: ב-`templates/backend-deployment.yml`, שורה 18, `imag` במקום `image`:
+
+```yaml
+          image: {{ .Values.backend.image.repository }}:{{ .Values.backend.imag.tag }}
+```
+
+```console
+$ helm lint helm/shoplist
+==> Linting helm/shoplist
+[INFO] Chart.yaml: icon is recommended
+[ERROR] templates/: template: shoplist/templates/backend-deployment.yml:18:66: executing "shoplist/templates/backend-deployment.yml" at <.Values.backend.imag.tag>: nil pointer evaluating interface {}.tag
+
+Error: 1 chart(s) linted, 1 chart(s) failed
+```
+
+איך קוראים את השגיאה, משמאל לימין:
+
+| חלק | מה הוא אומר |
+|---|---|
+| `backend-deployment.yml:18:66` | הקובץ, שורה 18, תו 66 |
+| `at <.Values.backend.imag.tag>` | הכתובת שנכשלה |
+| `nil pointer evaluating ... .tag` | אין `backend.imag` ב-values, אז אין ממה לקחת `tag` |
+| `1 chart(s) failed` | exit code `1`. ב-GitHub: ✗ אדום, וה-build לא רץ |
+
+#### הפלט של `helm lint`, כשיש טעות ב-values.yaml
+
+שבירה בכוונה: רווח אחד יותר לפני `replicas` ב-`values.yaml`:
+
+```yaml
+backend:
+   replicas: 1
+  image:
+```
+
+```console
+$ helm lint helm/shoplist
+==> Linting helm/shoplist
+[INFO] Chart.yaml: icon is recommended
+[ERROR] values.yaml: unable to parse YAML: error converting YAML to JSON: yaml: line 8: did not find expected key
+[ERROR] templates/: cannot load values.yaml: error converting YAML to JSON: yaml: line 8: did not find expected key
+[ERROR] : unable to load chart
+	cannot load values.yaml: error converting YAML to JSON: yaml: line 8: did not find expected key
+
+Error: 1 chart(s) linted, 1 chart(s) failed
+```
+
+**השגיאה `line 8: did not find expected key`:** בשורה 8 של `values.yaml` ההזחה לא מסתדרת. שלוש שורות `[ERROR]`, אבל זו אותה טעות אחת.
+
+#### הפלט של `helm template`: החורים, ומה יוצא מהם
+
+התבנית, `templates/backend-deployment.yml`, עם החורים:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.backend.replicas }}
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: {{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+```
+
+הפלט המלא, אחרי מילוי. `--show-only` מדפיס רק את הקובץ הזה:
+
+```console
+$ helm template shop helm/shoplist -n shop --show-only templates/backend-deployment.yml
+---
+# Source: shoplist/templates/backend-deployment.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: shop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: shoplist-backend:local
+          imagePullPolicy: Never
+          env:
+            - name: DB_HOST
+              value: postgres
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_DB
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+          ports:
+            - containerPort: 5000
+          resources:
+            requests:
+              cpu: "100m"
+              memory: 128Mi
+            limits:
+              cpu: "500m"
+              memory: 256Mi
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+```
+
+- **השורה `namespace: shop`:** מ-`-n shop`. עם `-n test` היה כתוב `test`.
+- **הערכים `replicas: 1`, `shoplist-backend:local`, `Never`:** בדיוק הערכים מ-`values.yaml`.
+- **השורה `# Source:`:** מאיזו תבנית בא הקטע.
+- **בלי `--show-only`:** כל ShopList, 13 משאבים (4 Deployments, 4 Services, Secret, ConfigMap, CronJob ו-2 PVC), 326 שורות.
+
+עם תגית מה-pipeline, כמו לפני `helm upgrade`:
+
+```console
+$ helm template shop helm/shoplist -n shop --set backend.replicas=3 --set backend.image.tag=a1b2c3d --show-only templates/backend-deployment.yml
+...
+spec:
+  replicas: 3
+...
+          image: shoplist-backend:a1b2c3d
+```
+
+#### המלכודת השקטה: מה `helm lint` לא תופס
+
+שבירה בכוונה: `.Values.backend.replica`, בלי `s` בסוף:
+
+```console
+$ helm lint helm/shoplist
+==> Linting helm/shoplist
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed
+
+$ helm template shop helm/shoplist -n shop --show-only templates/backend-deployment.yml
+---
+# Source: shoplist/templates/backend-deployment.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: shop
+spec:
+  replicas: 
+```
+
+הפקודה `lint` עוברת, ו-`replicas` ריק. למה? כשהטעות **באמצע** הכתובת (`imag.tag`), Helm מנסה להיכנס לתוך משהו שלא קיים, ונכשל. כשהטעות **בסוף** הכתובת (`replica`), הוא פשוט לא מוצא ערך, ושם ריק. Kubernetes יקבל `replicas` ריק וישים עותק אחד, אז זה אפילו ייראה כאילו עובד, עד שתשני ל-3 ולא יקרה כלום.
+
+| הטעות | `helm lint` | `helm template` |
+|---|---|---|
+| `.Values.backend.imag.tag`, באמצע הכתובת | ✗ `nil pointer`, עם שורה | ✗ אותה שגיאה |
+| הזחה שגויה ב-`values.yaml` | ✗ `yaml: line 8: did not find expected key` | ✗ אותה שגיאה |
+| `.Values.backend.replica`, בסוף הכתובת | ✓ עובר! | `replicas:` ריק. רק עין רואה |
+
+**המסקנה:** `helm lint` ב-pipeline, כי הוא תופס את רוב הטעויות לבד. ו-`helm template` בעיניים, לפני כל התקנה.
 
 ### שלב 5 — ci.yml, עם job אחד: test
 
