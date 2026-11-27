@@ -5,7 +5,7 @@
 
 ## מה יהיה בסוף השיעור
 
-- בריפו שלכן ב-GitHub, קובץ אחד: `.github/workflows/ci.yml`
+- בריפו שלכן ב-GitHub, קובץ אחד: ‎`.github/workflows/ci.yml`
 - בכל `git push`, GitHub מריץ לבד בדיקות, בונה את שלושת ה-images, ושולח אותם ל-`ghcr.io`
 - בדף הריפו, בלשונית **Packages**: שלושה images, כל אחד עם תגית של ה-commit שבנה אותו
 - האפליקציה ShopList רצה ב-cluster שלכן, מ-images שה-pipeline בנה, ולא מ-images שבניתן ביד
@@ -27,10 +27,10 @@
 ## לפני שמתחילות (בבית)
 
 - [ ] יש לכן חשבון GitHub, והריפו `devops-2027-shoplist` שלכן נמצא שם (fork, כמו בשיעורים הקודמים)
-- [ ] בריפו יש את `helm/shoplist/` משיעור 7. ה-pipeline בודק אותו
+- [ ] בריפו יש את `helm/shoplist/`‎ משיעור 7. ה-pipeline בודק אותו
 - [ ] בריפו יש את `app/backend`, `app/stats` ו-`app/frontend`, כל אחד עם `Dockerfile` משיעורי הבית של שיעור 4. ה-pipeline בונה מהם
-- [ ] **Actions מופעל ב-fork.** ב-fork חדש, GitHub מכבה את Actions. בדף הריפו: לשונית **Actions**. רואות כפתור ירוק **I understand my workflows, go ahead and enable them**? ללחוץ עליו, פעם אחת
-- [ ] Docker Desktop עם **Kubernetes running**, ו-Helm. צריך רק לחלק 7
+- [ ] ‏**Actions מופעל ב-fork.** ב-fork חדש, GitHub מכבה את Actions. בדף הריפו: לשונית **Actions**. רואות כפתור ירוק **I understand my workflows, go ahead and enable them**? ללחוץ עליו, פעם אחת
+- [ ] ‏Docker Desktop עם **Kubernetes running**, ו-Helm. צריך רק לחלק 7
 
 > **מאיפה עושות push?** רק מהבית. לא מהמחשב בכיתה.
 
@@ -43,11 +43,11 @@
 נניח ששיניתן שורה אחת ב-backend. כדי שהשינוי יגיע ל-cluster, מה עשיתן עד היום?
 
 1. לבדוק שהקוד בכלל עובד
-2. `docker build` ל-backend
+2. ‏`docker build` ל-backend
 3. לבחור תגית, ולזכור אותה
 4. לבנות גם את stats ואת frontend, אם גם הם השתנו
 5. להעלות את ה-images למקום שה-cluster יכול להגיע אליו
-6. `helm upgrade` עם התגית החדשה
+6. ‏`helm upgrade` עם התגית החדשה
 7. לבדוק שהכל עלה
 
 שבעה צעדים, ביד, בכל שינוי. ומה יכול להשתבש?
@@ -90,8 +90,8 @@
 | תחנה במטבח: תחנת טעימות, תחנת אפייה | job |
 | שורה במתכון: "לערבב", "לאפות 20 דקות" | step |
 | כלי מוכן מהחנות: מיקסר | action (`uses:`) |
-| פעולה שעושים בידיים | פקודה (`run:`) |
-| בקרת איכות: טועמים לפני שאורזים | job של בדיקות |
+| פעולה שעושים בידיים | פקודה (`run:`‎) |
+| בקרת איכות: טועמים לפני שאורזים | ‏job של בדיקות |
 | המחסן המרכזי, עם קופסאות מתויגות | ה-registry: `ghcr.io` |
 | מספר אצווה על הקופסה: 7f3a2c1 | תגית לפי ה-commit |
 | מדבקה "הכי טרי", שעוברת כל בוקר לקופסה אחרת | התגית `latest` |
@@ -104,14 +104,14 @@
 
 | מילה | מה זה | דוגמה |
 |---|---|---|
-| **workflow** | קובץ YAML אחד ב-`.github/workflows/`. מתכון שלם | `ci.yml` |
-| **event** | מה מפעיל את ה-workflow | `push`, `pull_request`, לחיצה על כפתור |
+| **workflow** | קובץ YAML אחד ב-‎`.github/workflows/`‎. מתכון שלם | `ci.yml` |
+| **event** | מה מפעיל את ה-workflow | ‏`push`, `pull_request`, לחיצה על כפתור |
 | **job** | קבוצת צעדים שרצה על runner אחד | `test`, `build` |
 | **step** | צעד אחד. פקודה, או action | `docker build ...` |
 | **runner** | המחשב שמריץ job. של GitHub, נקי, ונמחק בסוף | `ubuntu-latest` |
 | **action** | צעד מוכן, שמישהו כתב ופרסם | `actions/checkout@v6` |
 
-> **כל ה-jobs רצים במקביל.** אם לא אמרנו אחרת, כל ה-jobs ב-workflow מתחילים יחד, כל אחד במטבח משלו. רוצות סדר? `needs:`. נראה בחלק 4.
+> **כל ה-jobs רצים במקביל.** אם לא אמרנו אחרת, כל ה-jobs ב-workflow מתחילים יחד, כל אחד במטבח משלו. רוצות סדר? `needs:`‎. נראה בחלק 4.
 
 ---
 
@@ -130,7 +130,7 @@ devops-2027-shoplist/
   helm/
 ```
 
-**שימו לב לנקודה:** `.github`, עם נקודה בהתחלה. בלי הנקודה, GitHub לא יראה את הקובץ, ולא תהיה שום שגיאה. פשוט שום דבר לא ירוץ.
+**שימו לב לנקודה:** ‎`.github`, עם נקודה בהתחלה. בלי הנקודה, GitHub לא יראה את הקובץ, ולא תהיה שום שגיאה. פשוט שום דבר לא ירוץ.
 
 ### שלב 2 — hello.yml
 
@@ -174,10 +174,10 @@ jobs:
 | `jobs:` | מכאן, רשימת ה-jobs |
 | `hello:` | שם ה-job. אנחנו בוחרות אותו |
 | `runs-on: ubuntu-latest` | על איזה מחשב: Linux נקי של GitHub |
-| `steps:` | רשימת הצעדים, לפי הסדר. כל צעד מתחיל ב-`-` |
-| `name:` בתוך צעד | מה יופיע בלוג. לא חובה, אבל עוזר מאוד |
+| `steps:` | רשימת הצעדים, לפי הסדר. כל צעד מתחיל ב-‎`-`‎ |
+| ‏`name:`‎ בתוך צעד | מה יופיע בלוג. לא חובה, אבל עוזר מאוד |
 | `run:` | פקודת shell, כמו בטרמינל |
-| `run: \|` | כמה פקודות, שורה אחרי שורה. ה-`\|` אומר "הטקסט ממשיך בשורות הבאות" |
+| `run: \|` | כמה פקודות, שורה אחרי שורה. ה-‎`\|`‎ אומר "הטקסט ממשיך בשורות הבאות" |
 | `uses:` | צעד מוכן. כאן: להביא את הקוד מהריפו אל ה-runner |
 
 ### שלב 3 — `uses` מול `run`
@@ -187,11 +187,11 @@ jobs:
 | מה זה | פקודה שאתן כותבות | צעד מוכן, שמישהו כתב |
 | דומה ל | לערבב ביד | מיקסר מהחנות |
 | דוגמה | `run: docker build ...` | `uses: actions/checkout@v6` |
-| מאיפה | מהראש שלכן | מ-GitHub: `בעלים/שם@גרסה` |
+| מאיפה | מהראש שלכן | מ-GitHub: ‎`בעלים/שם@גרסה`‎ |
 
 **למה `actions/checkout`?** זוכרות שהמטבח ריק? ה-runner מתחיל בלי הקוד שלכן. הצעד הזה עושה `git clone` לריפו, ל-commit שהפעיל את הריצה. בלעדיו, `ls` מחזיר תיקייה ריקה.
 
-**מה זה `@v6`?** הגרסה של ה-action. תמיד לכתוב גרסה, כמו שלא כותבים `FROM python` בלי גרסה.
+**מה זה ‎`@v6`?** הגרסה של ה-action. תמיד לכתוב גרסה, כמו שלא כותבים `FROM python` בלי גרסה.
 
 ### שלב 4 — push, ולראות אותו רץ
 
@@ -224,13 +224,232 @@ git push
 
 | בדיקה | פקודה | מה היא תופסת |
 |---|---|---|
-| Python מתקמפל? | `python3 -m py_compile app/backend/*.py` | שגיאת תחביר ב-backend: נקודתיים חסרות, סוגריים, הזחה |
-| JavaScript תקין? | `node --check app/stats/server.js` | שגיאת תחביר ב-stats |
-| ה-chart תקין? | `helm lint helm/shoplist` | YAML שבור, או חור עם שם שגוי |
+| ‏Python מתקמפל? | `python3 -m py_compile app/backend/*.py` | שגיאת תחביר ב-backend: נקודתיים חסרות, סוגריים, הזחה |
+| ‏JavaScript תקין? | `node --check app/stats/server.js` | שגיאת תחביר ב-stats |
+| ה-chart תקין? | `helm lint helm/shoplist` | ‏YAML שבור, או חור עם שם שגוי (פירוט בהמשך) |
 
 **למה זה שווה משהו?** שגיאת תחביר ב-backend תגרום ל-pod לקרוס ב-`CrashLoopBackOff`. עדיף לגלות את זה אחרי דקה ב-GitHub, מאשר אחרי חצי שעה ב-cluster.
 
 > **בעולם האמיתי:** כאן רצות גם בדיקות יחידה (`pytest`, `npm test`), בדיקות סגנון (linters), וסריקת אבטחה ל-image. הרעיון זהה: כל בדיקה היא צעד, וצעד שנכשל עוצר הכל.
+
+### לעומק: `helm lint` ו-`helm template`
+
+את שתי הפקודות הכרנו בשיעור 7. כאן הן שוב, כי `helm lint` נכנס ל-pipeline.
+
+**מה משותף:** שתיהן לוקחות את התבניות שב-`templates/`‎ ואת `values.yaml`, וממלאות את החורים. שתיהן **לא** מדברות עם ה-cluster: אפשר להריץ אותן בלי Kubernetes בכלל, וגם על ה-runner של GitHub.
+
+**מה שונה:** מה הן עושות עם התוצאה.
+
+| | `helm lint` | `helm template` |
+|---|---|---|
+| כמו בשיעור 7 | המגיהה | תצוגה לפני הדפסה |
+| מה הוא עושה | ממלא את החורים, ובודק שהתוצאה תקינה | ממלא את החורים, ומדפיס את כל ה-YAML |
+| מה רואות בסוף | שורה אחת: ‎`0 chart(s) failed` | כל ה-YAML שיגיע ל-cluster, קובץ אחרי קובץ |
+| כשיש שגיאה | ‏‎`[ERROR]`‎, ו-exit code ‎`1` | ‏`Error:`‎, ו-exit code ‎`1` |
+| מי קוראת את התוצאה | המחשב: עבר או נכשל | בן אדם: עיניים על ה-YAML |
+| איפה משתמשים | ב-pipeline, בכל push | במחשב שלכן, לפני כל התקנה |
+
+**למה ב-pipeline יש `helm lint` ולא `helm template`?** כי ב-pipeline אין מי שיקרא. `lint` מחליט לבד, עבר או נכשל, ו-GitHub עוצר לפי ה-exit code. `template` מוציא מאות שורות, ומישהי צריכה לקרוא אותן.
+
+כל הפלטים כאן אמיתיים, מה-chart של ShopList (Helm 3.19; ב-Helm 4 הפלט כמעט זהה).
+
+#### הפלט של `helm lint`, כשהכל תקין
+
+```console
+$ helm lint helm/shoplist
+==> Linting helm/shoplist
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed
+```
+
+- **השורה ‎`[INFO]`‎:** רק המלצה, להוסיף אייקון ל-chart. מתעלמות.
+- **השורה האחרונה:** chart אחד נבדק, אפס נכשלו. exit code ‎`0`, וב-GitHub ✓ ירוק.
+
+#### הפלט של `helm lint`, כשיש טעות בתבנית
+
+שבירה בכוונה: ב-`templates/backend-deployment.yml`, שורה 18, `imag` במקום `image`:
+
+```yaml
+          image: {{ .Values.backend.image.repository }}:{{ .Values.backend.imag.tag }}
+```
+
+```console
+$ helm lint helm/shoplist
+==> Linting helm/shoplist
+[INFO] Chart.yaml: icon is recommended
+[ERROR] templates/: template: shoplist/templates/backend-deployment.yml:18:66: executing "shoplist/templates/backend-deployment.yml" at <.Values.backend.imag.tag>: nil pointer evaluating interface {}.tag
+
+Error: 1 chart(s) linted, 1 chart(s) failed
+```
+
+איך קוראים את השגיאה, משמאל לימין:
+
+| חלק | מה הוא אומר |
+|---|---|
+| `backend-deployment.yml:18:66` | הקובץ, שורה 18, תו 66 |
+| `at <.Values.backend.imag.tag>` | הכתובת שנכשלה |
+| `nil pointer evaluating ... .tag` | אין `backend.imag` ב-values, אז אין ממה לקחת `tag` |
+| `1 chart(s) failed` | ‏exit code ‎`1`. ב-GitHub: ✗ אדום, וה-build לא רץ |
+
+#### הפלט של `helm lint`, כשיש טעות ב-values.yaml
+
+שבירה בכוונה: רווח אחד יותר לפני `replicas` ב-`values.yaml`:
+
+```yaml
+backend:
+   replicas: 1
+  image:
+```
+
+```console
+$ helm lint helm/shoplist
+==> Linting helm/shoplist
+[INFO] Chart.yaml: icon is recommended
+[ERROR] values.yaml: unable to parse YAML: error converting YAML to JSON: yaml: line 8: did not find expected key
+[ERROR] templates/: cannot load values.yaml: error converting YAML to JSON: yaml: line 8: did not find expected key
+[ERROR] : unable to load chart
+	cannot load values.yaml: error converting YAML to JSON: yaml: line 8: did not find expected key
+
+Error: 1 chart(s) linted, 1 chart(s) failed
+```
+
+**השגיאה `line 8: did not find expected key`:** בשורה 8 של `values.yaml` ההזחה לא מסתדרת. שלוש שורות ‎`[ERROR]`‎, אבל זו אותה טעות אחת.
+
+#### הפלט של `helm template`: החורים, ומה יוצא מהם
+
+התבנית, `templates/backend-deployment.yml`, עם החורים:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.backend.replicas }}
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: {{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+```
+
+הפלט המלא, אחרי מילוי. ‎`--show-only` מדפיס רק את הקובץ הזה:
+
+```console
+$ helm template shop helm/shoplist -n shop --show-only templates/backend-deployment.yml
+---
+# Source: shoplist/templates/backend-deployment.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: shop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: shoplist-backend:local
+          imagePullPolicy: Never
+          env:
+            - name: DB_HOST
+              value: postgres
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_DB
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+          ports:
+            - containerPort: 5000
+          resources:
+            requests:
+              cpu: "100m"
+              memory: 128Mi
+            limits:
+              cpu: "500m"
+              memory: 256Mi
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+```
+
+- **השורה `namespace: shop`:** מ-‎`-n shop`. עם ‎`-n test` היה כתוב `test`.
+- **הערכים `replicas: 1`, `shoplist-backend:local`, `Never`:** בדיוק הערכים מ-`values.yaml`.
+- **השורה ‎`# Source:`‎:** מאיזו תבנית בא הקטע.
+- **בלי ‎`--show-only`:** כל ShopList, 13 משאבים (4 Deployments, 4 Services, Secret, ConfigMap, CronJob ו-2 PVC), 326 שורות.
+
+עם תגית מה-pipeline, כמו לפני `helm upgrade`:
+
+```console
+$ helm template shop helm/shoplist -n shop --set backend.replicas=3 --set backend.image.tag=a1b2c3d --show-only templates/backend-deployment.yml
+...
+spec:
+  replicas: 3
+...
+          image: shoplist-backend:a1b2c3d
+```
+
+#### המלכודת השקטה: מה `helm lint` לא תופס
+
+שבירה בכוונה: ‎`.Values.backend.replica`, בלי `s` בסוף:
+
+```console
+$ helm lint helm/shoplist
+==> Linting helm/shoplist
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed
+
+$ helm template shop helm/shoplist -n shop --show-only templates/backend-deployment.yml
+---
+# Source: shoplist/templates/backend-deployment.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: shop
+spec:
+  replicas: 
+```
+
+הפקודה `lint` עוברת, ו-`replicas` ריק. למה? כשהטעות **באמצע** הכתובת (`imag.tag`), Helm מנסה להיכנס לתוך משהו שלא קיים, ונכשל. כשהטעות **בסוף** הכתובת (`replica`), הוא פשוט לא מוצא ערך, ושם ריק. Kubernetes יקבל `replicas` ריק וישים עותק אחד, אז זה אפילו ייראה כאילו עובד, עד שתשני ל-3 ולא יקרה כלום.
+
+| הטעות | `helm lint` | `helm template` |
+|---|---|---|
+| ‏‎`.Values.backend.imag.tag`, באמצע הכתובת | ‏✗ `nil pointer`, עם שורה | ✗ אותה שגיאה |
+| הזחה שגויה ב-`values.yaml` | ✗ `yaml: line 8: did not find expected key` | ✗ אותה שגיאה |
+| ‏‎`.Values.backend.replica`, בסוף הכתובת | ✓ עובר! | ‏`replicas:`‎ ריק. רק עין רואה |
+
+**המסקנה:** `helm lint` ב-pipeline, כי הוא תופס את רוב הטעויות לבד. ו-`helm template` בעיניים, לפני כל התקנה.
 
 ### שלב 5 — ci.yml, עם job אחד: test
 
@@ -267,9 +486,9 @@ jobs:
 
 **מה חדש:**
 
-- `branches: [main]`: לרוץ רק על push ל-`main`. לא על כל branch
-- `azure/setup-helm@v5`: action שמתקין Helm על ה-runner. עוד מיקסר מהחנות
-- `for f in ...; do ...; done`: לולאה. `node --check` בודק קובץ אחד בכל פעם, אז עוברות על כל קובצי ה-`.js`, אחד אחרי השני
+- ‏`branches: [main]`‎: לרוץ רק על push ל-`main`. לא על כל branch
+- ‏`azure/setup-helm@v5`: action שמתקין Helm על ה-runner. עוד מיקסר מהחנות
+- ‏`for f in ...; do ...; done`: לולאה. `node --check` בודק קובץ אחד בכל פעם, אז עוברות על כל קובצי ה-‎`.js`, אחד אחרי השני
 
 ### שלב 6 — לשבור בכוונה
 
@@ -302,7 +521,7 @@ SyntaxError: expected ':'
 Error: Process completed with exit code 1.
 ```
 
-**איך GitHub יודע שהצעד נכשל?** כל פקודה מחזירה מספר כשהיא מסיימת: `0` = הצלחה, כל דבר אחר = כישלון. `py_compile` מצא שגיאה, החזיר `1`, ו-GitHub עצר.
+**איך GitHub יודע שהצעד נכשל?** כל פקודה מחזירה מספר כשהיא מסיימת: ‎`0` = הצלחה, כל דבר אחר = כישלון. `py_compile` מצא שגיאה, החזיר ‎`1`, ו-GitHub עצר.
 
 **ועוד:** GitHub שולח מייל לבעלת הריפו: "Run failed". אף אחד לא צריך לזכור לבדוק.
 
@@ -342,12 +561,12 @@ ghcr.io / rivkak / shoplist-backend : 7f3a2c1
 
 ### תגית: מספר אצווה, או מדבקה שזזה?
 
-| | התגית של ה-commit: `7f3a2c1` | `latest` |
+| | התגית של ה-commit: ‎`7f3a2c1` | `latest` |
 |---|---|---|
 | בקונדיטוריה | מספר אצווה מודפס על הקופסה | מדבקה "הכי טרי", שמחר תעבור לקופסה אחרת |
 | משתנה? | לעולם לא. אותו commit, אותו image | כל push מזיז אותה |
 | יודעות מה רץ? | כן: `git show 7f3a2c1` מראה בדיוק איזה קוד | לא. "latest של מתי?" |
-| rollback | `--set backend.image.tag=` לתגית הקודמת | אי אפשר. הקודם כבר לא `latest` |
+| rollback | ‏‎`--set backend.image.tag=`‎ לתגית הקודמת | אי אפשר. הקודם כבר לא `latest` |
 
 **הכלל:** ב-cluster, תמיד תגית של commit. `latest` רק לנוחות, כשמנסות משהו ביד.
 
@@ -367,7 +586,7 @@ permissions:
 
 ### שלב 7 — job שני: build-backend
 
-מוסיפות ל-`ci.yml`. את ה-`permissions` שמים מעל `jobs:`, ואת ה-job החדש מתחת ל-`test`:
+מוסיפות ל-`ci.yml`. את ה-`permissions` שמים מעל `jobs:`‎, ואת ה-job החדש מתחת ל-`test`:
 
 ```yaml
 permissions:
@@ -409,8 +628,8 @@ jobs:
 | שורה | מה היא עושה |
 |---|---|
 | `needs: test` | לחכות ש-`test` יסתיים בהצלחה. נכשל? ה-job הזה לא ירוץ בכלל |
-| `${GITHUB_REPOSITORY_OWNER,,}` | שם הבעלים. ה-`,,` בסוף ממיר לאותיות קטנות (bash) |
-| `${GITHUB_SHA::7}` | ה-commit המלא הוא 40 תווים. `::7` לוקח את 7 הראשונים |
+| `${GITHUB_REPOSITORY_OWNER,,}` | שם הבעלים. ה-‎`,,`‎ בסוף ממיר לאותיות קטנות (bash) |
+| `${GITHUB_SHA::7}` | ה-commit המלא הוא 40 תווים. ‎`::7` לוקח את 7 הראשונים |
 | `>> "$GITHUB_ENV"` | לשמור משתנה, כך שגם הצעדים הבאים יראו אותו. בלי זה, המשתנה נעלם בסוף הצעד |
 | `${{ secrets.GITHUB_TOKEN }}` | המפתח הזמני. GitHub מכניס אותו לפני שהפקודה רצה |
 | `${{ github.actor }}` | מי עשתה את ה-push |
@@ -423,7 +642,7 @@ jobs:
 | `${{ ... }}` | GitHub | לפני שהצעד מתחיל. GitHub כותב את הערך לתוך הפקודה |
 | `$OWNER`, `$GITHUB_SHA` | ה-shell של ה-runner | בזמן שהפקודה רצה |
 
-**כלל אצבע:** `secrets`, `matrix` ו-`github.actor`: עם `${{ }}`. משתני סביבה: עם `$`.
+**כלל אצבע:** `secrets`, `matrix` ו-`github.actor`: עם ‎`${{ }}`‎. משתני סביבה: עם ‎`$`‎.
 
 ### שלב 8 — לראות את ה-image במחסן
 
@@ -431,7 +650,7 @@ jobs:
 
 1. בדף הריפו, בצד ימין: **Packages**. (או בפרופיל שלכן, לשונית Packages)
 2. רואות `shoplist-backend`
-3. בפנים: התגית, למשל `7f3a2c1`, ופקודת `docker pull` מוכנה להעתקה
+3. בפנים: התגית, למשל ‎`7f3a2c1`, ופקודת `docker pull` מוכנה להעתקה
 
 ---
 
@@ -452,7 +671,7 @@ jobs:
         service: [backend, stats, frontend]
 ```
 
-השירות GitHub יוצר **שלושה עותקים** של ה-job. בכל עותק, `${{ matrix.service }}` מקבל ערך אחר. ושלושתם רצים **במקביל**, כל אחד במטבח משלו.
+השירות GitHub יוצר **שלושה עותקים** של ה-job. בכל עותק, ‎`${{ matrix.service }}`‎ מקבל ערך אחר. ושלושתם רצים **במקביל**, כל אחד במטבח משלו.
 
 | עותק | `matrix.service` | בונה מתוך | image |
 |---|---|---|---|
@@ -559,7 +778,7 @@ jobs:
           └── build (frontend) ──┘
 ```
 
-- `test` קודם, לבד
+- ‏`test` קודם, לבד
 - אחריו שלושה `build` **יחד**. ככה שלושה images נבנים בזמן של אחד
 
 **ומה אם test נכשל?** שלושת ה-build מסומנים באפור: **skipped**. אף image לא עלה למחסן. בדיוק מה שרצינו: עוגה שלא עברה טעימה, לא נארזת.
@@ -661,13 +880,13 @@ kubectl get deploy backend -n shop -o jsonpath='{.spec.template.spec.containers[
 ### איפה כן: Secrets של הריפו
 
 1. בדף הריפו: **Settings** ← **Secrets and variables** ← **Actions**
-2. **New repository secret**: שם, למשל `DOCKERHUB_TOKEN`, והערך
-3. ב-workflow: `${{ secrets.DOCKERHUB_TOKEN }}`
+2. ‏**New repository secret**: שם, למשל `DOCKERHUB_TOKEN`, והערך
+3. ב-workflow: ‎`${{ secrets.DOCKERHUB_TOKEN }}`‎
 
 **מה GitHub עושה עם זה:**
 
 - את הערך אי אפשר לקרוא שוב, אפילו לא אתן. רק להחליף
-- אם הערך מודפס בלוג, GitHub מסתיר אותו ומציג `***`
+- אם הערך מודפס בלוג, GitHub מסתיר אותו ומציג ‎`***`‎
 - ב-Pull Request שמגיע מ-fork של מישהי אחרת, הסודות **לא** נשלחים. אחרת כל אחד יכול היה לכתוב workflow שגונב אותם
 
 > **זוכרות את המעטפה משיעור 6?** Secret ב-Kubernetes הוא מעטפה בתוך ה-cluster. Secret ב-GitHub הוא מעטפה בתוך GitHub. אותו רעיון: הסיסמה לא כתובה בקוד.
@@ -684,7 +903,7 @@ kubectl get deploy backend -n shop -o jsonpath='{.spec.template.spec.containers[
 | `runs-on: ubuntu-latest` | ה-runner: Linux נקי של GitHub |
 | `steps:` | רשימת צעדים, לפי הסדר |
 | `run:` | פקודת shell |
-| `uses: owner/name@v1` | action מוכן |
+| `uses: owner/name@v1` | ‏action מוכן |
 | `needs: test` | לחכות ל-job אחר, ולרוץ רק אם הצליח |
 | `strategy.matrix` | אותו job, כמה עותקים, במקביל |
 | `permissions:` | מה מותר ל-`GITHUB_TOKEN` |
@@ -704,7 +923,7 @@ kubectl get deploy backend -n shop -o jsonpath='{.spec.template.spec.containers[
 | כלי | איפה גר | הקובץ |
 |---|---|---|
 | **GitHub Actions** | בתוך GitHub | `.github/workflows/*.yml` |
-| **GitLab CI** | בתוך GitLab | `.gitlab-ci.yml`. נראה בשיעור 9 |
+| **GitLab CI** | בתוך GitLab | ‏‎`.gitlab-ci.yml`. נראה בשיעור 9 |
 | **Jenkins** | שרת שמתקינים לבד | `Jenkinsfile` |
 | **CircleCI**, **Azure Pipelines** | שירותים בענן | קובץ YAML בריפו |
 
@@ -713,9 +932,9 @@ kubectl get deploy backend -n shop -o jsonpath='{.spec.template.spec.containers[
 ### מה מוסיפים ב-pipeline של חברה
 
 - **בדיקות אמיתיות:** `pytest`, `npm test`, בדיקות שמריצות את האפליקציה עם מסד נתונים
-- **actions מוכנים ל-Docker:** `docker/build-push-action` במקום `docker build` ו-`push` ביד. עם cache, כך שבנייה חוזרת לוקחת שניות
+- ‏**actions מוכנים ל-Docker:** `docker/build-push-action` במקום `docker build` ו-`push` ביד. עם cache, כך שבנייה חוזרת לוקחת שניות
 - **סריקת אבטחה:** כלי כמו Trivy סורק את ה-image ומחפש חולשות ידועות, לפני ה-push
-- **בדיקה לפני המיזוג:** בחברה לא עושים push ישר ל-`main`. עובדים על branch, ופותחים Pull Request. עם `on: pull_request`, ה-pipeline בודק את השינוי **לפני** שהוא נכנס. ו-`if:` על ה-job של ה-build, כך שעל PR רק בודקים, ולא מעלים images
+- **בדיקה לפני המיזוג:** בחברה לא עושים push ישר ל-`main`. עובדים על branch, ופותחים Pull Request. עם `on: pull_request`, ה-pipeline בודק את השינוי **לפני** שהוא נכנס. ו-`if:`‎ על ה-job של ה-build, כך שעל PR רק בודקים, ולא מעלים images
 - **הגנה על main:** ב-Settings ← Branches: אי אפשר למזג PR ל-`main` אם ה-pipeline אדום
 - **סביבות:** קודם `staging`, ורק אחרי אישור של אדם, `production`
 
@@ -729,17 +948,17 @@ kubectl get deploy backend -n shop -o jsonpath='{.spec.template.spec.containers[
 
 | מה רואות | למה | מה עושים |
 |---|---|---|
-| אין שום ריצה בלשונית Actions | Actions כבוי ב-fork, או שהקובץ לא ב-`.github/workflows/` | לשונית Actions ← enable. לבדוק את הנתיב, כולל הנקודה ב-`.github` |
-| `Invalid workflow file` | שגיאת YAML: הזחה, או `-` חסר | GitHub מראה את מספר השורה. רווחים, לא Tab |
+| אין שום ריצה בלשונית Actions | ‏Actions כבוי ב-fork, או שהקובץ לא ב-‎`.github/workflows/`‎ | לשונית Actions ← enable. לבדוק את הנתיב, כולל הנקודה ב-‎`.github` |
+| `Invalid workflow file` | שגיאת YAML: הזחה, או ‎`-`‎ חסר | ‏GitHub מראה את מספר השורה. רווחים, לא Tab |
 | `py_compile`: `SyntaxError` | שגיאת תחביר ב-backend | לפתוח את הלוג, לראות שורה, לתקן |
-| `helm lint`: `Error: ... not found` | `helm/shoplist` לא בריפו, או בשם אחר | `git add helm/` ו-push. לבדוק את הנתיב |
+| `helm lint`: `Error: ... not found` | ‏`helm/shoplist` לא בריפו, או בשם אחר | ‏`git add helm/`‎ ו-push. לבדוק את הנתיב |
 | `repository name must be lowercase` | אותיות גדולות בשם המשתמשת | `${GITHUB_REPOSITORY_OWNER,,}` |
-| `denied: permission_denied: write_package` | אין `packages: write` | להוסיף `permissions:` מעל `jobs:` |
-| `unauthorized` ב-`docker login` | `secrets.GITHUB_TOKEN` כתוב לא נכון | בדיוק כך: `${{ secrets.GITHUB_TOKEN }}` |
-| `build` מסומן **skipped** | `test` נכשל | לתקן את מה ש-`test` מצא, ו-push |
-| `ErrImagePull` ב-cluster | ה-package פרטי, או תגית שלא קיימת | Package settings ← Public. להעתיק את התגית מה-Summary |
+| `denied: permission_denied: write_package` | אין `packages: write` | להוסיף `permissions:`‎ מעל `jobs:`‎ |
+| ‏`unauthorized` ב-`docker login` | ‏`secrets.GITHUB_TOKEN` כתוב לא נכון | בדיוק כך: ‎`${{ secrets.GITHUB_TOKEN }}`‎ |
+| ‏`build` מסומן **skipped** | ‏`test` נכשל | לתקן את מה ש-`test` מצא, ו-push |
+| ‏`ErrImagePull` ב-cluster | ה-package פרטי, או תגית שלא קיימת | ‏Package settings ← Public. להעתיק את התגית מה-Summary |
 | ה-cluster מריץ קוד ישן | התגית `latest` עם `IfNotPresent` | תמיד תגית של commit |
-| `$TAG` ריק בצעד Build | המשתנה לא נשמר ל-`$GITHUB_ENV` | `echo "TAG=..." >> "$GITHUB_ENV"` בצעד קודם |
+| ‏‎`$TAG` ריק בצעד Build | המשתנה לא נשמר ל-‎`$GITHUB_ENV` | ‏`echo "TAG=..." >> "$GITHUB_ENV"`‎ בצעד קודם |
 
 ---
 
@@ -752,13 +971,13 @@ kubectl get deploy backend -n shop -o jsonpath='{.spec.template.spec.containers[
 כל step הוא צעד אחד: פקודה או action. job הוא קבוצת צעדים שרצה על runner אחד, לפי הסדר. jobs שונים רצים במקביל, כל אחד על runner משלו, אלא אם כתבנו `needs`.
 
 **3. מה ההבדל בין `uses` ל-`run`?**
-השדה `run` מריץ פקודת shell שכתבנו. `uses` מפעיל action מוכן שמישהו פרסם, למשל `actions/checkout`. תמיד עם גרסה אחרי `@`.
+השדה `run` מריץ פקודת shell שכתבנו. `uses` מפעיל action מוכן שמישהו פרסם, למשל `actions/checkout`. תמיד עם גרסה אחרי ‎`@`‎.
 
 **4. למה לתייג image לפי ה-commit, ולא `latest`?**
 תגית של commit לא משתנה: יודעים בדיוק איזה קוד רץ, ואפשר לחזור לגרסה קודמת. `latest` זז בכל push, אז אי אפשר לדעת מה רץ, ו-node שכבר הוריד `latest` ישן לא יוריד את החדש.
 
 **5. איך שומרים סיסמה ש-pipeline צריך?**
-ב-Secrets של הריפו, לא בקובץ. ב-workflow קוראים לו `${{ secrets.NAME }}`. GitHub מסתיר אותו בלוג, ולא שולח אותו ל-PR מ-fork.
+ב-Secrets של הריפו, לא בקובץ. ב-workflow קוראים לו ‎`${{ secrets.NAME }}`‎. GitHub מסתיר אותו בלוג, ולא שולח אותו ל-PR מ-fork.
 
 **6. מה זה `GITHUB_TOKEN`, ולמה צריך `permissions`?**
 מפתח זמני ש-GitHub מייצר לכל ריצה, רק לריפו הזה. כברירת מחדל הוא מוגבל, ו-`permissions` מוסיף בדיוק את מה שצריך, למשל `packages: write`. העיקרון: הרשאה מינימלית.

@@ -3,12 +3,12 @@
 ## מה לומדות בשיעור
 
 - למה CI/CD: שבעה צעדים ידניים בכל שינוי, ומה משתבש בהם
-- CI, Continuous Delivery ו-Continuous Deployment, ומה זה pipeline
-- GitHub Actions: workflow, event, job, step, runner, ו-`uses` מול `run`
+- ‏CI, Continuous Delivery ו-Continuous Deployment, ומה זה pipeline
+- ‏GitHub Actions: workflow, event, job, step, runner, ו-`uses` מול `run`
 - בקרת איכות: job של בדיקות שעוצר הכל כשמשהו שבור
-- registry: `ghcr.io`, שם של image, ולמה תגית של commit עדיפה על `latest`
-- `GITHUB_TOKEN`, `permissions` ו-Secrets: איך pipeline מתחבר, בלי סיסמה בקוד
-- `matrix` ו-`needs`: שלושה images במקביל, רק אחרי שהבדיקות עברו
+- ‏registry: `ghcr.io`, שם של image, ולמה תגית של commit עדיפה על `latest`
+- ‏`GITHUB_TOKEN`, `permissions` ו-Secrets: איך pipeline מתחבר, בלי סיסמה בקוד
+- ‏`matrix` ו-`needs`: שלושה images במקביל, רק אחרי שהבדיקות עברו
 - מהמחסן אל ה-cluster: `values-registry.yaml` ו-`helm upgrade` עם התגית מה-pipeline
 
 ## איך השיעור עובד
@@ -20,10 +20,10 @@
 הקובץ [exercises.md](exercises.md): שישה תרגולים, לפי הסדר, עם פתרון מקופל מתחת לכל אחד. לא מוגש.
 
 1. לקרוא workflow, על הנייר (10 דקות)
-2. hello, ומה הסדר עושה (15 דקות)
+2. ‏hello, ומה הסדר עושה (15 דקות)
 3. מצאו את הטעות (15 דקות)
 4. בקרת איכות שעובדת (20 דקות)
-5. matrix ו-needs (20 דקות)
+5. ‏matrix ו-needs (20 דקות)
 6. מהמחסן אל ה-cluster (20 דקות)
 
 ## שיעורי בית
