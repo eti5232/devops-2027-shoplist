@@ -64,9 +64,9 @@ spec:
 
 1. הריפו של `dana`, branch `main`, התיקייה `helm/shoplist`.
 2. ל-`staging`.
-3. האחרון ברשימה: `values-staging.yaml`. בדיוק כמו כמה `-f` ב-Helm.
+3. האחרון ברשימה: `values-staging.yaml`. בדיוק כמו כמה ‎`-f` ב-Helm.
 4. הוא **נשאר** ב-cluster. אין `prune: true`, אז Argo CD לא מוחק. הוא יסמן אותו OutOfSync, עם סמל של פח.
-5. הסנכרון ייכשל: `namespaces "staging" not found`. חסר `syncOptions: [CreateNamespace=true]`.
+5. הסנכרון ייכשל: `namespaces "staging" not found`. חסר `syncOptions: [CreateNamespace=true]`‎.
 
 </details>
 
@@ -139,7 +139,7 @@ permissions:
 
 **ג.** חסר `needs: build`. ה-job רץ במקביל ל-`test` ול-`build`, כותב תגית חדשה ל-Git מיד, ו-Argo CD מנסה למשוך image שעוד לא קיים: `ImagePullBackOff`. ואם `test` נכשל, התגית כבר ב-Git.
 
-**ד.** `contents: read` לא מתיר push. ה-`git push` ייכשל עם `Permission denied` או `403`. צריך `permissions: contents: write` ב-job של deploy.
+**ד.** `contents: read` לא מתיר push. ה-`git push` ייכשל עם `Permission denied` או ‎`403`. צריך `permissions: contents: write` ב-job של deploy.
 
 </details>
 
@@ -211,7 +211,7 @@ permissions:
         run: npm test
 ```
 
-לכתוב את אותו job ב-`.gitlab-ci.yml`, בשלב `test`. ואז לענות:
+לכתוב את אותו job ב-‎`.gitlab-ci.yml`, בשלב `test`. ואז לענות:
 
 1. מה קרה ל-`checkout`?
 2. מה קרה ל-`setup-node`?

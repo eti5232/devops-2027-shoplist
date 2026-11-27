@@ -14,7 +14,7 @@
 
 **המשפט של היום:** מה שכתוב ב-Git, זה מה שרץ.
 
-> **על צילומי המסך במדריך:** צולמו בחזרה, על המחשב של המורה. הריפו בחזרה היה שרת Git מקומי, לכן בצילומים כתוב `git://gitserver...` ולא `https://github.com/...`. אצלכן יופיע הריפו שלכן ב-GitHub. כל השאר זהה.
+> **על צילומי המסך במדריך:** צולמו בחזרה, על המחשב של המורה. הריפו בחזרה היה שרת Git מקומי, לכן בצילומים כתוב `git://gitserver...`‎ ולא `https://github.com/...`‎. אצלכן יופיע הריפו שלכן ב-GitHub. כל השאר זהה.
 
 ---
 
@@ -67,7 +67,7 @@ kubectl scale deployment backend -n shop --replicas=5
 
 למה לא להוסיף ל-pipeline צעד של `helm upgrade`, וזהו?
 
-| | push: ה-pipeline דוחף | pull: ה-cluster מושך |
+| | ‏push: ה-pipeline דוחף | ‏pull: ה-cluster מושך |
 |---|---|---|
 | מי עושה את ההתקנה | ה-runner, במחשב של GitHub | סוכן שרץ בתוך ה-cluster |
 | צריך להגיע ל-cluster מבחוץ | כן. כתובת, פורט פתוח, ומפתח | לא. הוא יוצא החוצה, אל Git |
@@ -106,7 +106,7 @@ kubectl scale deployment backend -n shop --replicas=5
 | כתוב 3 עוגות, על המדף 2 | OutOfSync |
 | מישהי הזיזה עוגה? המנהלת מחזירה | self-heal |
 | נמחק מהלוח? יורד מהמדף | prune |
-| רוצות עוגה חדשה? כותבות על הלוח | commit, ולא `kubectl` |
+| רוצות עוגה חדשה? כותבות על הלוח | ‏commit, ולא `kubectl` |
 
 ### הלולאה
 
@@ -204,7 +204,7 @@ kubectl port-forward svc/argocd-server -n argocd 8080:80
 
 ### שלב 4 — argocd/application.yaml
 
-בתיקייה הראשית של הריפו, תיקייה חדשה `argocd/`, ובה:
+בתיקייה הראשית של הריפו, תיקייה חדשה `argocd/`‎, ובה:
 
 ```yaml
 # argocd/application.yaml - the standing order card
@@ -231,9 +231,9 @@ spec:
 - **במקום `OWNER`:** שם המשתמשת שלכן ב-GitHub.
 - **השורה `kind: Application`:** סוג חדש, שהותקן יחד עם Argo CD. ה-namespace שלו `argocd`, כי משם Argo CD קורא כרטיסים.
 - **החלק `source`:** הלוח. איזה ריפו, איזה branch, ואיזו תיקייה. יש בתיקייה `Chart.yaml`, אז Argo CD מבין לבד שזה Helm.
-- **השורה `valueFiles`:** כמו `-f values-registry.yaml`. הנתיב הוא בתוך התיקייה של ה-chart.
+- **השורה `valueFiles`:** כמו ‎`-f values-registry.yaml`. הנתיב הוא בתוך התיקייה של ה-chart.
 - **החלק `destination`:** המדף. `kubernetes.default.svc` פירושו: ה-cluster שבו Argo CD רץ.
-- **האפשרות `CreateNamespace=true`:** כמו `--create-namespace`.
+- **האפשרות `CreateNamespace=true`:** כמו ‎`--create-namespace`.
 
 ואיפה ה-tag של ה-image? **אין.** הוא ב-`values-registry.yaml`, בריפו. זה כל הרעיון.
 
@@ -337,7 +337,7 @@ git push
 
 | שורה | בלי | עם |
 |---|---|---|
-| `automated` | OutOfSync, ומחכה ללחיצה | מסנכרן לבד |
+| `automated` | ‏OutOfSync, ומחכה ללחיצה | מסנכרן לבד |
 | `prune` | נמחק מ-Git? נשאר ב-cluster | נמחק גם מה-cluster |
 | `selfHeal` | שינוי ביד? OutOfSync, ונשאר | מחזיר למה שכתוב |
 
@@ -392,10 +392,10 @@ git push
 
 ![היסטוריה](images/11-history.jpg)
 
-| | Helm, שיעור 7 | GitOps |
+| | ‏Helm, שיעור 7 | GitOps |
 |---|---|---|
-| איך חוזרים | `helm rollback` | `git revert`, ו-push |
-| Git יודע? | לא | כן: commit חדש, עם הודעה |
+| איך חוזרים | `helm rollback` | ‏`git revert`, ו-push |
+| ‏Git יודע? | לא | כן: commit חדש, עם הודעה |
 | הכפתור ROLLBACK ב-Argo CD | — | עובד רק בלי `automated` |
 
 למה לא הכפתור? כי אם ה-cluster יחזור אחורה, ו-Git עדיין אומר את הגרסה החדשה, self-heal יחזיר אותה תוך שניות. Git הוא האמת, אז חוזרות ב-Git.
@@ -414,7 +414,7 @@ git push  ->  Actions: test, build  ->  ghcr.io: a1b2c3d  ->  commit "Deploy a1b
 
 ### שלב 11 — job של deploy
 
-ב-`.github/workflows/ci.yml`, job שלישי, אחרי `build`:
+ב-‎`.github/workflows/ci.yml`, job שלישי, אחרי `build`:
 
 ```yaml
   deploy:
@@ -437,7 +437,7 @@ git push  ->  Actions: test, build  ->  ghcr.io: a1b2c3d  ->  commit "Deploy a1b
 
 - **השורה `needs: build`:** רק אחרי ששלושת ה-images במחסן. אחרת Argo CD ינסה למשוך image שעוד לא קיים.
 - **ההרשאה `contents: write`:** מותר ל-job הזה לעשות push. רק לו. ל-workflow כולו נשאר `contents: read`.
-- **הפקודה `sed`:** מחליפה כל שורה שמתחילה ברווחים ו-`tag:`, בתגית החדשה. בתוך מירכאות, כי תגית של ספרות בלבד, כמו `1234567`, YAML היה קורא כמספר.
+- **הפקודה `sed`:** מחליפה כל שורה שמתחילה ברווחים ו-`tag:`‎, בתגית החדשה. בתוך מירכאות, כי תגית של ספרות בלבד, כמו ‎`1234567`, YAML היה קורא כמספר.
 - **הפקודה `git pull --rebase`:** למקרה ש מישהי עשתה push בזמן שה-pipeline רץ.
 - **ואין לולאה:** push שנעשה עם `GITHUB_TOKEN` לא מפעיל ריצה חדשה של ה-workflow.
 
@@ -494,9 +494,9 @@ build:
 | `strategy: matrix` | `parallel: matrix` | כמה עותקים |
 | `uses: actions/checkout` | אוטומטי | להביא את הקוד |
 | `ghcr.io`, `GITHUB_TOKEN` | `$CI_REGISTRY`, `$CI_JOB_TOKEN` | המחסן, וההרשאה |
-| `${GITHUB_SHA::7}` | `$CI_COMMIT_SHORT_SHA` (8 תווים) | התגית |
+| `${GITHUB_SHA::7}` | ‏‎`$CI_COMMIT_SHORT_SHA` (8 תווים) | התגית |
 | Settings → Secrets | Settings → CI/CD → Variables | סודות |
-| push עם `GITHUB_TOKEN`: בלי ריצה | push עם token: כן ריצה. `-o ci.skip` | לולאה ב-deploy |
+| ‏push עם `GITHUB_TOKEN`: בלי ריצה | ‏push עם token: כן ריצה. ‎`-o ci.skip` | לולאה ב-deploy |
 
 - **השורה `stages`:** כל ה-jobs באותו שלב רצים יחד. השלב הבא מתחיל רק אם כולם הצליחו.
 - **השורה `image`:** כל job רץ בתוך container. אין `setup-python`: בוחרות image שיש בו Python.
@@ -516,9 +516,9 @@ build:
 
 | מילה | מה זה |
 |---|---|
-| GitOps | Git הוא האמת. ה-cluster מושך |
+| GitOps | ‏Git הוא האמת. ה-cluster מושך |
 | drift | סחף: שינוי ביד, שלא ב-Git |
-| push מול pull | נכנסים ל-cluster מבחוץ, או שה-cluster יוצא אל Git |
+| ‏push מול pull | נכנסים ל-cluster מבחוץ, או שה-cluster יוצא אל Git |
 | `Application` | כרטיס: איזה ריפו, לאיזה namespace |
 | Synced / OutOfSync | תואם ל-Git, או לא |
 | Healthy / Progressing / Degraded / Missing | עובד, עולה, נכשל, לא קיים |
@@ -548,14 +548,14 @@ build:
 
 | מה רואות | מה עושים |
 |---|---|
-| pods של `argocd` ב-`Pending` או `OOMKilled` | חסר זיכרון. Docker Desktop: 6GB לפחות |
+| ‏pods של `argocd` ב-`Pending` או `OOMKilled` | חסר זיכרון. Docker Desktop: 6GB לפחות |
 | `repository not found` | ריפו פרטי, או טעות ב-`repoURL` |
-| `ComparisonError` על `values-registry.yaml` | הקובץ לא נדחף ל-Git, או לא בתיקייה של ה-chart |
-| Synced, אבל `ImagePullBackOff` | התגית לא קיימת ב-ghcr, או ה-package פרטי |
+| ‏`ComparisonError` על `values-registry.yaml` | הקובץ לא נדחף ל-Git, או לא בתיקייה של ה-chart |
+| ‏Synced, אבל `ImagePullBackOff` | התגית לא קיימת ב-ghcr, או ה-package פרטי |
 | `provided port is already allocated` | 30080 תפוס. `helm uninstall shop -n shop` |
-| שיניתי ב-Git, ולא קורה כלום | REFRESH. ובאמת עשיתן push? `git log origin/main -1` |
-| deploy נכשל: `Permission denied` ב-push | חסר `contents: write` ב-job |
-| `! [rejected] ... (fetch first)` ב-`git push` שלכן | ה-pipeline עשה commit. `git pull --rebase`, ואז push |
+| שיניתי ב-Git, ולא קורה כלום | ‏REFRESH. ובאמת עשיתן push? `git log origin/main -1` |
+| ‏deploy נכשל: `Permission denied` ב-push | חסר `contents: write` ב-job |
+| ‏‎`! [rejected] ... (fetch first)`‎ ב-`git push` שלכן | ה-pipeline עשה commit. `git pull --rebase`, ואז push |
 | שיניתי ביד, וזה חוזר | זה לא באג: `selfHeal`. משנות ב-Git |
 | הכניסה לאתר נכשלת אחרי הפעלה מחדש | ה-port-forward נסגר. להריץ שוב |
 
@@ -579,4 +579,4 @@ build:
 הוא לא מתקין. הוא בונה images, ואז כותב את התגית החדשה בקובץ values ב-Git, ועושה commit ו-push. Argo CD רואה את ה-commit ומסנכרן.
 
 **6. מה ההבדל בין GitHub Actions ל-GitLab CI?**
-אותו רעיון, תחביר אחר. ב-GitLab: קובץ אחד `.gitlab-ci.yml`, סדר לפי `stages`, כל job רץ בתוך container לפי `image`, הקוד מגיע לבד, ומשתנים כמו `CI_COMMIT_SHORT_SHA`. ובשני המקרים, ה-CD יכול להיות אותו Argo CD.
+אותו רעיון, תחביר אחר. ב-GitLab: קובץ אחד ‎`.gitlab-ci.yml`, סדר לפי `stages`, כל job רץ בתוך container לפי `image`, הקוד מגיע לבד, ומשתנים כמו `CI_COMMIT_SHORT_SHA`. ובשני המקרים, ה-CD יכול להיות אותו Argo CD.

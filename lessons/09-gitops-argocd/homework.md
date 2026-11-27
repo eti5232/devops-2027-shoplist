@@ -72,7 +72,7 @@ lessons/09-gitops-argocd/homework/
 
 **בדיקה:**
 - הפקודה `kubectl get applications -n argocd`: `Synced` ו-`Healthy`
-- הפקודה `kubectl get pods -n shop -o wide`: הכל `Running`, וה-images מ-`ghcr.io/<השם שלכן>/...`
+- הפקודה `kubectl get pods -n shop -o wide`: הכל `Running`, וה-images מ-`ghcr.io/<השם שלכן>/...`‎
 - האתר `http://localhost:30080` עובד
 - הפקודה `helm list -n shop` מחזירה רשימה ריקה. למה? (שאלה 3 בד6)
 
@@ -93,27 +93,27 @@ lessons/09-gitops-argocd/homework/
 ### ד4 — self-heal, ו-git revert
 
 1. להריץ `kubectl scale deployment stats -n shop --replicas=4`, ולעבור מיד לאתר.
-2. ב-`git log --oneline`, למצוא את ה-commit של `stats.replicas: 2`. ואז `git revert --no-edit <המזהה שלו>`, ו-push.
+2. ב-`git log --oneline`, למצוא את ה-commit של `stats.replicas: 2`. ואז `git revert --no-edit <המזהה שלו>`‎, ו-push.
 
 **בדיקה:**
 - אחרי שלב 1: תוך שניות, שוב שני pods של stats
 - אחרי שלב 2: pod אחד של stats, ו-Synced ל-commit של ה-revert
 
-**צילום מסך 3:** הטרמינל: פקודת ה-`scale`, ומיד אחריה `kubectl get deployment stats -n shop`, שמראה `2/2`.
+**צילום מסך 3:** הטרמינל: פקודת ה-`scale`, ומיד אחריה `kubectl get deployment stats -n shop`, שמראה ‎`2/2`.
 **צילום מסך 4:** HISTORY AND ROLLBACK, עם ה-revert למעלה.
 
 ### ד5 — המעגל המלא: job של deploy
 
-1. ב-`.github/workflows/ci.yml`, job שלישי בשם `deploy`, לפי שלב 11 במדריך:
+1. ב-‎`.github/workflows/ci.yml`, job שלישי בשם `deploy`, לפי שלב 11 במדריך:
    - רץ **רק אחרי** `build`
    - ההרשאה `permissions: contents: write`, **רק** ב-job הזה
-   - כותב את 7 התווים של ה-commit לכל שורת `tag:` ב-`values-registry.yaml`, ועושה commit בשם `Deploy <תגית>`, ו-push
-2. שינוי קטן בקוד: הכותרת ב-`app/frontend/index.html`, מ-`ShopList` ל-`ShopList של <השם שלכן>`. commit ו-push.
+   - כותב את 7 התווים של ה-commit לכל שורת `tag:`‎ ב-`values-registry.yaml`, ועושה commit בשם `Deploy <תגית>`‎, ו-push
+2. שינוי קטן בקוד: הכותרת ב-`app/frontend/index.html`, מ-`ShopList` ל-`ShopList של <השם שלכן>`‎. commit ו-push.
 
 **בדיקה:**
 - בלשונית Actions: `test`, שלושה `build`, ואז `deploy`. הכל ירוק
-- להריץ `git pull`, ואז `git log --oneline -2`: למעלה `Deploy <תגית>`, שלא אתן עשיתן
-- ב-`values-registry.yaml`: שלוש שורות `tag:` עם התגית הזו
+- להריץ `git pull`, ואז `git log --oneline -2`: למעלה `Deploy <תגית>`‎, שלא אתן עשיתן
+- ב-`values-registry.yaml`: שלוש שורות `tag:`‎ עם התגית הזו
 - באתר של Argo CD: Synced ל-commit של ה-Deploy
 - באתר `http://localhost:30080`, אחרי רענון: הכותרת החדשה
 
@@ -154,7 +154,7 @@ lessons/09-gitops-argocd/homework/
 ## 4. מה מגישות
 
 - [ ] קובץ `argocd/application.yaml`, עם `automated`
-- [ ] קובץ `ci.yml` עם `deploy`, ובהיסטוריה של הריפו commit בשם `Deploy ...`
+- [ ] קובץ `ci.yml` עם `deploy`, ובהיסטוריה של הריפו commit בשם `Deploy ...`‎
 - [ ] הקבצים `answers.md` ו-`gitlab-ci.yml`, וחמישה צילומי מסך
 - [ ] לעשות push מהבית
 
@@ -178,13 +178,13 @@ lessons/09-gitops-argocd/homework/
 
 | מה רואות | מה עושים |
 |---|---|
-| pods של `argocd` ב-`Pending` או `OOMKilled` | חסר זיכרון. Docker Desktop: 6GB לפחות |
+| ‏pods של `argocd` ב-`Pending` או `OOMKilled` | חסר זיכרון. Docker Desktop: 6GB לפחות |
 | `repository not found` | הריפו פרטי, או טעות ב-`repoURL` |
-| `ComparisonError` על `values-registry.yaml` | הקובץ לא נדחף, או נתיב לא נכון ב-`valueFiles` (רק שם הקובץ) |
-| Synced, אבל `ImagePullBackOff` | ה-package פרטי, או התגית לא קיימת ב-ghcr |
-| `provided port is already allocated` | ShopList ישן תופס את 30080. `helm uninstall shop -n shop` |
-| שיניתי ב-Git, ולא קורה כלום | REFRESH. ובאמת עשיתן push? |
-| deploy: `Permission denied` או `403` ב-push | חסר `permissions: contents: write` ב-job |
-| `! [rejected] ... (fetch first)` כשאתן עושות push | ה-pipeline עשה commit. `git pull --rebase`, ואז push |
+| ‏`ComparisonError` על `values-registry.yaml` | הקובץ לא נדחף, או נתיב לא נכון ב-`valueFiles` (רק שם הקובץ) |
+| ‏Synced, אבל `ImagePullBackOff` | ה-package פרטי, או התגית לא קיימת ב-ghcr |
+| `provided port is already allocated` | ‏ShopList ישן תופס את 30080. `helm uninstall shop -n shop` |
+| שיניתי ב-Git, ולא קורה כלום | ‏REFRESH. ובאמת עשיתן push? |
+| ‏deploy: `Permission denied` או ‎`403` ב-push | חסר `permissions: contents: write` ב-job |
+| ‏‎`! [rejected] ... (fetch first)`‎ כשאתן עושות push | ה-pipeline עשה commit. `git pull --rebase`, ואז push |
 | deploy: `nothing to commit` | התגית כבר בקובץ. הרצתן שוב את אותו commit? זה בסדר |
 | אין כניסה ל-`localhost:8080` | ה-port-forward נסגר. להריץ שוב, בטרמינל נפרד |
